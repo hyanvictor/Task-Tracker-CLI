@@ -16,27 +16,17 @@ def add_task(dado, novo_dado='data.json'):
     if not os.path.exists('data/data.json'):
         # Se o arquivo (data) não existir ele, cria uma lista vazia
         with open('data/data.json', 'w') as file:
-            json.dump([])
-
+            json.dump([], file)
+    else:
         # 2. Lê os dados existentes
         with open('data/data.json', 'r', encoding='utf-8') as f:
-            try:
                 # 3. Le os dados existentes
-                data = json.load('data/data.json')
-            except json.JSONDecodeError:
-                # Se o arquivo tiver vazio, cria uma nova lista vazia
-                data = []
-
-    # 4. Adiciona o novo dado(dicionário com 5 chaves)
-    if isinstance(dado, list):
-        data.append(novo_dado)
-    else:
-        # Caso o JSON não for uma lista, ele trará de acordo com a estrutura necessária
-        data = [dado, novo_dado]
+                data = json.load(f)
     
     # 4. Grava de volta no JSON
     with open('data/data.json', 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
+        data.append(dado)
     
 # teste
 novo_registro = {
